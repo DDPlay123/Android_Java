@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Ch18</string>
+    <string name="getAir">查詢空氣品質</string>
+</resources>

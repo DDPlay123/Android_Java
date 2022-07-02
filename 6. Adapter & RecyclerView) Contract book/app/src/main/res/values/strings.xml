@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Ch7</string>
+    <string name="newContact">新增聯絡人</string>
+    <string name="Name">姓名</string>
+    <string name="PleaseInputName">請輸入姓名</string>
+    <string name="Phone">電話</string>
+    <string name="PleaseInputPhone">請輸入電話</string>
+    <string name="ConfirmAdd">確認新增</string>
+</resources>

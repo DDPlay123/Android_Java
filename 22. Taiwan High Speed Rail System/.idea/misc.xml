@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/drawable/background_white_20_radius.xml" value="0.1525" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/drawable/btn_style.xml" value="0.1525" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/drawable/btn_swap_img.xml" value="0.1525" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/activity_home.xml" value="0.24947916666666667" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/activity_main.xml" value="0.24947916666666667" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/activity_restaurant.xml" value="0.24947916666666667" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/activity_station.xml" value="0.24947916666666667" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/activity_time_table.xml" value="0.24947916666666667" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/dialog_loading.xml" value="0.2484375" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/dialog_search.xml" value="0.24947916666666667" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/dialog_warn.xml" value="0.2484375" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/dialog_warn_2.xml" value="0.2484375" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/item_restaurant.xml" value="0.24947916666666667" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/item_search.xml" value="0.24947916666666667" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/item_station.xml" value="0.2484375" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/item_time_table.xml" value="0.2484375" />
+        <entry key="..\:/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/menu/menu.xml" value="0.2484375" />
+        <entry key="..\:/Users/a7032/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/activity_home.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/a7032/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/activity_restaurant.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/a7032/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/activity_station.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/a7032/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/layout/activity_time_table.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/a7032/Android/AndroidStudioProjects/Android_Java/THRS/app/src/main/res/menu/menu.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

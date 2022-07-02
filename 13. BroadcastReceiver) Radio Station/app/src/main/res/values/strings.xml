@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Ch14</string>
+    <string name="PleaseSelectChannel">請選擇收聽頻道</string>
+    <string name="musicChannel">音樂頻道</string>
+    <string name="newsChannel">新聞頻道</string>
+    <string name="sportChannel">體育頻道</string>
+</resources>

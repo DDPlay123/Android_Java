@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="competition">龜兔賽跑</string>
+    <string name="rabbit">兔子</string>
+    <string name="turtle">烏龜</string>
+    <string name="start">開始</string>
+</resources>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Ch10</string>
+    <string name="start">開始</string>
+    <string name="stop">停止</string>
+    <string name="transparent">透明</string>
+    <string name="scaling">縮放</string>
+    <string name="shift">位移</string>
+    <string name="rotate">旋轉</string>
+</resources>

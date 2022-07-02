@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home">首頁</string>
+    <string name="second">第二頁</string>
+    <string name="third">第三頁</string>
+</resources>

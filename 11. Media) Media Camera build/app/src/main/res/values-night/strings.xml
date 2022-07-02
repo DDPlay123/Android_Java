@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photograph">拍照</string>
+    <string name="rotate_90">旋轉 90 度</string>
+</resources>
