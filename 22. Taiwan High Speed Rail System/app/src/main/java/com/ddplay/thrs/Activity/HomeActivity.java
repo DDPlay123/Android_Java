@@ -177,7 +177,12 @@ public class HomeActivity extends AppCompatActivity  implements OnMapReadyCallba
                                 edEnd.setText(marker.getTitle());
                                 break;
                             case R.id.NearRestaurant:
-                                startActivity(new Intent(this, RestaurantActivity.class));
+                                Bundle bundle = new Bundle();
+                                bundle.putDouble("lat", marker.getPosition().latitude);
+                                bundle.putDouble("lng", marker.getPosition().longitude);
+                                Intent intent = new Intent(this, RestaurantActivity.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
                                 break;
                             case R.id.Cancel:
                                 popupMenu.dismiss();
