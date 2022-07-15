@@ -47,7 +47,7 @@ public class TimeTableActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void getData(String trainNo, String start, String end) {
-        Request request = new THSR().API("TrainNumber", null, null, null, trainNo);
+        Request request = THSR.getInstance().API("TrainNumber", null, null, null, trainNo);
         // GET Method
         new OkHttpClient().newCall(request).enqueue(new Callback() {
             @Override

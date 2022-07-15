@@ -55,7 +55,7 @@ public class StationActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void getData(String OriginStationID, String DestinationStationID,
                          String TrainDate, String Start, String End) {
-        Request request = new THSR().API("DailyTimetable", OriginStationID, DestinationStationID, TrainDate, null);
+        Request request = THSR.getInstance().API("DailyTimetable", OriginStationID, DestinationStationID, TrainDate, null);
         // GET Method
         new OkHttpClient().newCall(request).enqueue(new Callback() {
             @Override

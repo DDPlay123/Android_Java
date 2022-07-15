@@ -41,10 +41,22 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class THSR {
+    private static THSR instance = null;
+    public static THSR getInstance() {
+        if (instance == null) {
+            synchronized (THSR.class) {
+                if (instance == null) {
+                    instance = new THSR();
+                }
+            }
+        }
+        return instance;
+    }
+
     private String accessToken = "";
 
-    private String beforeDate = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(new Date());
-    private String afterDate = "";
+    private String beforeDate = "2022/07/11";
+    private String afterDate = "2022/07/12";
     private Boolean isNextDay = true;
 
     private String httpUrl;
@@ -57,13 +69,15 @@ public class THSR {
 
         checkNextDay();
 
-        if (accessToken.equals("") || isNextDay) {
+        if (isNextDay) {
             try {
                 accessToken = postToken();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
+        Log.d("Token Test", accessToken);
 
         return new Request.Builder()
                 .url(httpUrl)
@@ -110,8 +124,8 @@ public class THSR {
     }
 
     private String grantType = "client_credentials"; // 固定使用"client_credentials"
-    private String clientId = "-------------e5c-4198"; // Client Id
-    private String clientSecret = "-----------------b8e3-6f6bc643bcf0"; // Client Secret
+    private String clientId = "--------------f-3e5c-4198"; // Client Id
+    private String clientSecret = "--------------b8e3-6f6bc643bcf0"; // Client Secret
 
     @SuppressLint("StaticFieldLeak")
     private String postToken() throws InterruptedException {

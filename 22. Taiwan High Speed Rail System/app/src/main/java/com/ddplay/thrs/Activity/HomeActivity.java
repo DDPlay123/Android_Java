@@ -214,7 +214,7 @@ public class HomeActivity extends AppCompatActivity  implements OnMapReadyCallba
     private final List<StationData> data = new ArrayList<>();
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void getData() {
-        Request request = new THSR().API("Station", null, null, null, null);
+        Request request = THSR.getInstance().API("Station", null, null, null, null);
         // GET Method
         new OkHttpClient().newCall(request).enqueue(new Callback() {
             @Override
