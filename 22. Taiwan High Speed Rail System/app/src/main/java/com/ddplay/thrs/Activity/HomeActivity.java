@@ -1,7 +1,6 @@
 package com.ddplay.thrs.Activity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import android.Manifest;
@@ -11,8 +10,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -39,7 +38,6 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -117,25 +115,18 @@ public class HomeActivity extends AppCompatActivity  implements OnMapReadyCallba
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         // 檢查是否授權定位權限
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-        ) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // 精確定位包含粗略定位，因此只要求精確定位權限
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
+            myMap = googleMap;
             // 取得資料
             getData();
-            myMap = googleMap;
             // 顯示目前位置與目前位置的按鈕
             myMap.setMyLocationEnabled(true);
             // 關閉原生定位鈕
@@ -146,16 +137,9 @@ public class HomeActivity extends AppCompatActivity  implements OnMapReadyCallba
             btnMyLocation.setOnClickListener(v -> {
                 float myLat = new MyLocation(this).findLocation().getLatitude();
                 float myLng = new MyLocation(this).findLocation().getLongitude();
-                myMap.animateCamera(
-                        CameraUpdateFactory.newLatLngZoom(
-                                new LatLng(myLat, myLng), 15f)
-                );
-            });
+                myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLat, myLng), 15f));});
             // 初始化地圖中心點及size
-            myMap.moveCamera(
-                    CameraUpdateFactory.newLatLngZoom(
-                            new LatLng(23.805857418790836, 120.9195094280048), 7f)
-            );
+            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(23.805857418790836, 120.9195094280048), 7f));
             // Menu
             myMap.setOnMarkerClickListener(marker -> {
                 if (!marker.isInfoWindowShown()) {
@@ -165,10 +149,7 @@ public class HomeActivity extends AppCompatActivity  implements OnMapReadyCallba
                     popupMenu.setOnMenuItemClickListener(item -> {
                         switch (item.getItemId()) {
                             case R.id.StationName:
-                                myMap.animateCamera(
-                                        CameraUpdateFactory.newLatLngZoom(
-                                                new LatLng(marker.getPosition().latitude, marker.getPosition().longitude), 20f)
-                                );
+                                myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(marker.getPosition().latitude, marker.getPosition().longitude), 20f));
                                 break;
                             case R.id.SetOriginSite:
                                 edStart.setText(marker.getTitle());
@@ -196,12 +177,12 @@ public class HomeActivity extends AppCompatActivity  implements OnMapReadyCallba
             });
         }
     }
-    TextView edStart;
-    TextView edEnd;
-    ImageButton btnSwap;
-    ImageButton btnMyLocation;
-    Button btnStationSearch;
-    Button btnRouteSearch;
+    private TextView edStart;
+    private TextView edEnd;
+    private ImageButton btnSwap;
+    private ImageButton btnMyLocation;
+    private Button btnStationSearch;
+    private Button btnRouteSearch;
     private void findView() {
         edStart = findViewById(R.id.ed_start_station);
         edEnd = findViewById(R.id.ed_end_station);
@@ -212,18 +193,21 @@ public class HomeActivity extends AppCompatActivity  implements OnMapReadyCallba
     }
     // 取得車站資料
     private final List<StationData> data = new ArrayList<>();
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void getData() {
-        Request request = THSR.getInstance().API("Station", null, null, null, null);
+        Request request = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            request = THSR.getInstance().API("Station", null, null, null, null);
+        }
         // GET Method
         new OkHttpClient().newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
+                Log.e("ERROR", "Data ERROR");
             }
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String json = Objects.requireNonNull(response.body()).string();
+                String json = response.body().string();
                 ObjectStation[] object = new Gson().fromJson(json, ObjectStation[].class);
                 PolylineOptions polylineOptions = new PolylineOptions();
                 for (ObjectStation detail : object) {
@@ -235,12 +219,12 @@ public class HomeActivity extends AppCompatActivity  implements OnMapReadyCallba
                                 .position(new LatLng(detail.StationPosition.getPositionLat(), detail.StationPosition.getPositionLon()))
                                 .title(detail.StationName.getZh_tw() + "高鐵站")
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_thsr));
-                        if (myMap != null) myMap.addMarker(markerOptions);
+                        myMap.addMarker(markerOptions);
                         // adder polyline
-                        polylineOptions.add(new LatLng(detail.StationPosition.getPositionLat(), detail.StationPosition.getPositionLon()))
+                        polylineOptions
+                                .add(new LatLng(detail.StationPosition.getPositionLat(), detail.StationPosition.getPositionLon()))
                                 .color(Color.parseColor("#FF9E42"));
-                        if (myMap != null) myMap.addPolyline(polylineOptions)
-                                .setWidth(50f);
+                        myMap.addPolyline(polylineOptions).setWidth(50f);
                         dialogLoading.endLoading();
                     });
                 }
@@ -250,27 +234,20 @@ public class HomeActivity extends AppCompatActivity  implements OnMapReadyCallba
     // 載入地圖
     private GoogleMap myMap;
     private void loadMap() {
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
     // 要求權限
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @Override
     public void onRequestPermissionsResult(
             int requestCode,
             @NonNull String[] permissions,
-            @NonNull int[] grantResults)
-    {
+            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 0) {
-            if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                finish();
-            } else {
-                loadMap();
-            }
+        if (grantResults != null && grantResults.length > 0 && requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_DENIED) finish();
+            else loadMap();
         }
     }
 }
