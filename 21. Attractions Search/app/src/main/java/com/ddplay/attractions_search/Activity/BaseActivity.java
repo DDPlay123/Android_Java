@@ -32,6 +32,7 @@ public class BaseActivity extends AppCompatActivity {
 
         PagerAdapter adapter = new SliderAdapter(this, Gallery);
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(1);
         // 起始位置
         viewPager.setCurrentItem(Position);
         // 監聽畫面滑動，以變換 actionbar

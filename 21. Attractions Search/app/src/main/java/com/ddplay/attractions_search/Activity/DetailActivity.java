@@ -7,14 +7,17 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import com.ddplay.attractions_search.Adapter.GalleryAdapter;
 import com.ddplay.attractions_search.Data.DetailData;
 import com.ddplay.attractions_search.Data.Gallery;
 import com.ddplay.attractions_search.R;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,13 +40,23 @@ public class DetailActivity extends AppCompatActivity {
         int N = getIntent().getIntExtra("Number", 8);
         // 定義元件
         ImageView imgPhoto = findViewById(R.id.img_photo);
+        ProgressBar progressBar = findViewById(R.id.progressBar);
         TextView tvName = findViewById(R.id.tv_name);
         TextView tvAddress = findViewById(R.id.tv_address);
         GridView gridStar = findViewById(R.id.grid_star);
         TextView tvPhotos = findViewById(R.id.tv_photos);
         GridView gridPhotos = findViewById(R.id.grid_photos);
         // 大圖
-        Picasso.get().load(data.get(N).getPhoto()).into(imgPhoto);
+        Picasso.get().load(data.get(N).getPhoto()).into(imgPhoto, new Callback() {
+            @Override
+            public void onSuccess() {
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void onError(Exception e) {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        });
         // 名稱
         tvName.setText(data.get(N).getName());
         // 地址
@@ -86,7 +99,7 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         tvTitle.setText("詳細資料");
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowCustomEnabled(false);
+        getSupportActionBar().setDisplayShowCustomEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override

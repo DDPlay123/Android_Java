@@ -58,10 +58,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         // 要求權限
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
         edSearch = findViewById(R.id.edit_search);
         Button btnSearch = findViewById(R.id.btn_search);
         Button btnRecord = findViewById(R.id.btn_record);
@@ -128,7 +126,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else {
             myMap = googleMap;
             // 取得資料
-            getData();
+            if (details == null || details.size() == 0) getData();
             // 顯示目前位置與目前位置的按鈕
             myMap.setMyLocationEnabled(true);
             // 初始化地圖中心點及size
