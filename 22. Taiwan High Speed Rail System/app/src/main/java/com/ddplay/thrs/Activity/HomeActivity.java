@@ -238,7 +238,6 @@ public class HomeActivity extends AppCompatActivity  implements OnMapReadyCallba
         mapFragment.getMapAsync(this);
     }
     // 要求權限
-
     @Override
     public void onRequestPermissionsResult(
             int requestCode,

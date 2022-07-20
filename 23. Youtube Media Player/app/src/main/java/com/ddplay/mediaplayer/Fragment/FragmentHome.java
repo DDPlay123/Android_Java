@@ -58,15 +58,12 @@ public class FragmentHome extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         swipeRefreshLayout.setColorSchemeResources(R.color.blue);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            data.clear();
             getData();
             adapter.notifyDataSetChanged();
             swipeRefreshLayout.setRefreshing(false);
         });
     }
 
-    List<VideoDetail> data = new ArrayList<>();
-    List<Sentence> sentence = new ArrayList<>();
     private void getData() {
         Request request = new Video().postData();
         new OkHttpClient().newCall(request).enqueue(new Callback() {
@@ -80,6 +77,8 @@ public class FragmentHome extends Fragment {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String json = Objects.requireNonNull(response.body()).string();
                 ObjectData objectData = new Gson().fromJson(json, ObjectData.class);
+                List<VideoDetail> data = new ArrayList<>();
+                List<Sentence> sentence = new ArrayList<>();
                 // Sentence、VideoURL、MainEditor
                 for (ObjectData.Result.VideoInfo.CaptionResult.Results result : objectData.result.videoInfo.captionResult.results) {
                     int index = 0;

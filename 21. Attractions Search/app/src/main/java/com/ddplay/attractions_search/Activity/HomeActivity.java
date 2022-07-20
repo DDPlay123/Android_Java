@@ -59,15 +59,15 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        // 要求權限
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
         edSearch = findViewById(R.id.edit_search);
         Button btnSearch = findViewById(R.id.btn_search);
         Button btnRecord = findViewById(R.id.btn_record);
         ImageView btnDelete = findViewById(R.id.btn_delete);
-
         // 取得資料庫
         database = new Database(this, "History", null, 1).getWritableDatabase();
-        // 要求權限
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         // 載入地圖
         loadMap();
         // 搜尋功能
@@ -121,19 +121,14 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         // 檢查是否授權定位權限
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-        ) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // 精確定位包含粗略定位，因此只要求精確定位權限
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
-            getData();
             myMap = googleMap;
+            // 取得資料
+            getData();
             // 顯示目前位置與目前位置的按鈕
             myMap.setMyLocationEnabled(true);
             // 初始化地圖中心點及size
@@ -246,26 +241,19 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     // 載入地圖
     private GoogleMap myMap;
     private void loadMap() {
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
     // 要求權限
     @Override
     public void onRequestPermissionsResult(
             int requestCode,
             @NonNull String[] permissions,
-            @NonNull int[] grantResults)
-    {
+            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 0) {
-            if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                finish();
-            } else {
-                loadMap();
-            }
+        if (grantResults != null && grantResults.length > 0 && requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_DENIED) finish();
+            else loadMap();
         }
     }
     @Override
